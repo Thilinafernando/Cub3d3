@@ -1,0 +1,197 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 17:23:13 by ilmahjou          #+#    #+#             */
+/*   Updated: 2025/07/11 22:11:31 by tkurukul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CUB3D_H
+# define CUB3D_H
+
+# include "mlx/mlx.h"
+# include "mlx/mlx_int.h"
+# include "libft/libft.h"
+# include "libprintf/ft_printf.h"
+# include "get_next_line/get_next_line.h"
+
+# include <stdlib.h>
+# include <errno.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <string.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <math.h>
+# include <stdbool.h>
+
+# define WINDOW_WIDTH 900
+# define WINDOW_HEIGHT 800
+# define TEXTURE_SIZE 515
+# define MOVE_SPEED 0.1
+# define ROT_SPEED 0.05
+#define MAX_DOORS 128
+#define MINIMAP_RADIUS_PIXELS 50
+#define MINIMAP_DIAMETER (MINIMAP_RADIUS_PIXELS * 2)
+#define MINIMAP_RADIUS_TILES 4
+#define MINIMAP_SCALE 10
+#define MINIMAP_OFFSET_X 10
+#define MINIMAP_OFFSET_Y 600
+
+// this for the door is open or not ok thilina
+typedef struct s_door
+{
+	int x;
+	int y;
+	int is_open;  // 0 = closed, 1 = open
+} t_door;
+
+
+typedef struct s_info
+{
+	char	**file;
+	char	**map;
+	int		count;
+	int		max;
+	char	**tmp;
+	int		player_x;
+	int		player_y;
+	int		flood_flag;
+	char	*no;
+	char	*so;
+	char	*ea;
+	char	*we;
+	int		rgb_f;
+	int		rgb_c;
+}	t_info;
+
+typedef struct s_player
+{
+    double x;
+    double y;
+    double dir_x;
+    double dir_y;
+    double plane_x;
+    double plane_y;
+} t_player;
+
+typedef struct s_ray
+{
+    double camera_x;
+    double ray_dir_x;
+    double ray_dir_y;
+    int map_x;
+    int map_y;
+    double side_dist_x;
+    double side_dist_y;
+    double delta_dist_x;
+    double delta_dist_y;
+    double perp_wall_dist;
+    int step_x;
+    int step_y;
+    int hit;
+    int side;
+    int line_height;
+    int draw_start;
+    int draw_end;
+} t_ray;
+
+typedef struct s_texture
+{
+    void *img;
+    char *addr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+    int width;
+    int height;
+} t_texture;
+
+typedef struct s_game
+{
+    void *mlx;
+    void *win;
+    void *img;
+    char *addr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+    t_info *info;
+    t_player player;
+    t_texture textures[5]; // NO, SO, WE, EA
+    t_texture weapon_texture;
+    int keys[256];
+    int mouse_x;           // Add this
+    int mouse_y;           // Add this
+    int prev_mouse_x;      // Add this
+    int mouse_enabled;     // Add this
+    t_door doors[MAX_DOORS];// bonus
+    int door_count;// bonus
+} t_game;
+
+//parsing functions (your friend's code)
+bool	extention_check(char *str);
+int		paths_conditions(t_info *info, int i, int j, char *str);
+int		fill_file(char *map, t_info *info);
+int		fill_map(t_info *info);
+int		validate_map(t_info *info);
+int		paths_check(t_info *info, int i, char *str);
+int		check_spaces(t_info *info);
+int		paths(t_info *info);
+int		count_lines(char *map);
+bool	map_only(char *str);
+char	*ft_mapdup(const char *s, t_info *info);
+char	*x_fill(t_info *info);
+int		fill_tmp(t_info *info);
+void	print_matrix(char **matrix);
+int		find_player_pos(char **matrix, t_info *info);
+bool	verify_char(char c);
+void	flood_fill(int x, int y, t_info *info);
+int		check_playable(t_info *info);
+int		check_characters(t_info *info);
+char	*ft_mydup(const char *s);
+void	init_struct(t_info *info);
+int		rgb_convertion(t_info *info, char *str, int i, int j);
+int		save_path(char *str, t_info *info, int i, int j);
+void	free_all(t_info *info);
+
+//rendering functions (your code)
+void	init_player(t_game *game);
+int		load_texture(t_game *game, t_texture *texture, char *path);
+int		load_textures(t_game *game);
+void	my_mlx_pixel_put(t_game *game, int x, int y, int color);
+int		get_texture_color(t_texture *texture, int x, int y);
+void	perform_dda(t_game *game, t_ray *ray);
+void	calculate_ray(t_game *game, t_ray *ray, int x);
+void	draw_wall(t_game *game, t_ray *ray, int x);
+void	draw_floor_ceiling(t_game *game, t_ray *ray, int x);
+void	raycast(t_game *game);
+void draw_weapon(t_game *game);
+void init_doors(t_game *game);
+int is_door_open(t_game *game, int x, int y);
+int is_wall_or_closed_door(t_game *game, double x, double y);
+//game controls functions
+int		key_press(int keycode, t_game *game);
+int		key_release(int keycode, t_game *game);
+void	move_player(t_game *game);
+int		game_loop(t_game *game);
+int		close_game(t_game *game);
+int		init_mlx(t_game *game);
+void    free_game_resources(t_game *game);
+void    free_textures(t_game *game);
+void    free_mat(char **matrix);
+void    try_open_close_door(t_game *game); //bonus
+void    try_toggle_door(t_game *game);
+//control mouse.c
+int mouse_release(int button, int x, int y, t_game *game);
+int mouse_press(int button, int x, int y, t_game *game);
+int mouse_move(int x, int y, t_game *game);
+//minimap.c
+void draw_minimap(t_game *game);
+
+#endif
