@@ -23,7 +23,7 @@ EXECDIR = execution/
 EXEC = execution/game_controls.c execution/rendering.c execution/main.c
 
 UTILSDIR = Utils/
-UTILS = 
+UTILS =
 
 PARSDIR = parssing/
 PRC = parssing/parsing.c parsing_utils.c parsing_utils1.c parsing_utils2.c parsing_utils3.c parsing_utils4.c
@@ -34,7 +34,7 @@ BONUS = \
 	bonus/execution_bonus/game_controls_bonus.c \
 	bonus/execution_bonus/main_bonus.c \
 	bonus/execution_bonus/rendering_bonus.c \
-	bonus/execution_bonus/minimap.c\
+	bonus/execution_bonus/draw_minimap.c\
 	parssing/parsing.c \
 	parssing/parsing_utils.c \
 	parssing/parsing_utils1.c \
@@ -129,7 +129,7 @@ clean_mlx:
 	@bash -c 'tput blink; echo -ne "Cleaning MLX     \r"; tput sgr0; sleep 2; echo "MLX Gone!     "'
 	@rm -rf $(MLXDIR)
 
-vall: all clean        
+vall: all clean
 	valgrind --track-origins=yes -q --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ./cub3d map.cub
 
 .PHONY: all bonus clean fclean re clean_mlx mlx

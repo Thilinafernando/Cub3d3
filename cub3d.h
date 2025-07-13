@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:23:13 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/11 22:11:31 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/13 23:57:32 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@
 # define MOVE_SPEED 0.1
 # define ROT_SPEED 0.05
 #define MAX_DOORS 128
-#define MINIMAP_RADIUS_PIXELS 50
-#define MINIMAP_DIAMETER (MINIMAP_RADIUS_PIXELS * 2)
-#define MINIMAP_RADIUS_TILES 4
-#define MINIMAP_SCALE 10
+#define MINIMAP_SCALE 8
+#define MINIMAP_RADIUS_TILES 5
+#define MINIMAP_DIAMETER (MINIMAP_RADIUS_TILES * 2 * MINIMAP_SCALE)
+#define MINIMAP_RADIUS_PIXELS (MINIMAP_RADIUS_TILES * MINIMAP_SCALE)
 #define MINIMAP_OFFSET_X 10
 #define MINIMAP_OFFSET_Y 600
 
@@ -50,7 +50,6 @@ typedef struct s_door
 	int y;
 	int is_open;  // 0 = closed, 1 = open
 } t_door;
-
 
 typedef struct s_info
 {
@@ -112,6 +111,18 @@ typedef struct s_texture
     int height;
 } t_texture;
 
+typedef struct s_minimap
+{
+    int     dx;
+    int     dy;
+    int     px;
+    int     py;
+    int     point_x;
+    int     point_y;
+    int     perp_x;
+    int     perp_y;
+} t_minimap;
+
 typedef struct s_game
 {
     void *mlx;
@@ -132,10 +143,16 @@ typedef struct s_game
     int mouse_enabled;     // Add this
     t_door doors[MAX_DOORS];// bonus
     int door_count;// bonus
+    int	px; //i added it for the minimap
+	int	py;
+	int	pixel_dx;
+	int	pixel_dy;
+    t_minimap *minimap;
 } t_game;
 
 //parsing functions (your friend's code)
 bool	extention_check(char *str);
+bool	xmp_extention_check(char *str);
 int		paths_conditions(t_info *info, int i, int j, char *str);
 int		fill_file(char *map, t_info *info);
 int		fill_map(t_info *info);
@@ -192,6 +209,16 @@ int mouse_release(int button, int x, int y, t_game *game);
 int mouse_press(int button, int x, int y, t_game *game);
 int mouse_move(int x, int y, t_game *game);
 //minimap.c
-void draw_minimap(t_game *game);
+
+void	set_zero_mini(t_minimap *minimap);
+void	draw_player_body(t_game *game, int px, int py);
+void	process_draw_arrow(t_game *game, int px, int py, int dist);
+void	draw_player_arrow(t_game *game, int px, int py);
+void	draw_tile_if_in_circle(t_game *game, int tile_x, int tile_y, int color);
+int	    get_tile_color(char tile);
+void	draw_moving_minimap_tiles(t_game *game);
+void	draw_accurate_player_dot(t_game *game);
+void	draw_minimap_background_circle(t_game *game);
+void	draw_minimap(t_game *game);
 
 #endif

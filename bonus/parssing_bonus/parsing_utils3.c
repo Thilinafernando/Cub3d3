@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:04:40 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/09 14:08:22 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/12 20:12:01 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,78 +74,34 @@ void	init_struct(t_info *info)
 	info->rgb_f = -42;
 }
 
-int rgb_convertion(t_info *info, char *str, int i, int j)
+int	rgb_convertion(t_info *info, char *str, int i, int j)
 {
-    char *rgb;
-    char **tmp;
-    int red, green, blue;
-    int k;
+	char	*rgb;
+	char	**tmp;
+	int		red;
+	int		green;
+	int		blue;
 
-    rgb = ft_mydup(info->file[i] + (j));
-    if (!rgb)
-        return (ft_printf(2, "Error: Malloc failed.\n"));
-    
-    tmp = ft_split(rgb, ',');
-    free(rgb); // Free immediately after use
-    
-    if (!tmp)
-        return (ft_printf(2, "Error: Malloc failed.\n"));
-    
-    // Check if we have exactly 3 RGB values
-    k = 0;
-    while (tmp[k])
-        k++;
-    if (k != 3)
-    {
-        free_mat(tmp);
-        return (ft_printf(2, "Error: Invalid RGB format.\n"));
-    }
-    
-    red = ft_atoi(tmp[0]);
-    green = ft_atoi(tmp[1]);
-    blue = ft_atoi(tmp[2]);
-    
-    free_mat(tmp); // Free the array
-    
-    if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255)
-        return (ft_printf(2, "Error: Invalid RGB values.\n"));
-    
-    if (!strncmp(str, "F", 1))
-        info->rgb_f = (red << 16) | (green << 8) | blue;
-    if (!strncmp(str, "C", 1))
-        info->rgb_c = (red << 16) | (green << 8) | blue;
-    
-    return (0);
+	rgb = ft_mydup(info->file[i] + (j));
+	if (!rgb)
+		return (ft_printf(2, "Error: Malloc failed.\n"));
+	tmp = ft_split(rgb, ',');
+	if (!tmp || !tmp[0] || !tmp[1] || !tmp[2])
+		return (ft_printf(2, "Error: Wrong entries for rgb.\n"));
+	free(rgb);
+	red = ft_atoi(tmp[0]);
+	green = ft_atoi(tmp[1]);
+	blue = ft_atoi(tmp[2]);
+	free_mat(tmp);
+	if (red < 0 || red > 255 || green < 0 || green > 255
+		|| blue < 0 || blue > 255)
+		return (ft_printf(2, "Error: Invalid RGB values.\n"));
+	if (!ft_strncmp(str, "F", 1))
+		info->rgb_f = (red << 16) | (green << 8) | blue;
+	if (!ft_strncmp(str, "C", 1))
+		info->rgb_c = (red << 16) | (green << 8) | blue;
+	return (0);
 }
-
-// int	rgb_convertion(t_info *info, char *str, int i, int j)
-// {
-// 	char	*rgb;
-// 	char	**tmp;
-// 	int		red;
-// 	int		green;
-// 	int		blue;
-
-// 	rgb = ft_mydup(info->file[i] + (j));
-// 	if (!rgb)
-// 		return (ft_printf(2, "Error: Malloc failed.\n"));
-// 	tmp = ft_split(rgb, ',');
-// 	if (!tmp)
-// 		return (ft_printf(2, "Error: Malloc failed.\n"));
-// 	free(rgb);
-// 	red = ft_atoi(tmp[0]);
-// 	green = ft_atoi(tmp[1]);
-// 	blue = ft_atoi(tmp[2]);
-// 	free_mat(tmp);
-// 	if (red < 0 || red > 255 || green < 0 || green > 255
-// 		|| blue < 0 || blue > 255)
-// 		return (ft_printf(2, "Error: Invalid RGB values.\n"));
-// 	if (!strncmp(str, "F", 1))
-// 		info->rgb_f = (red << 16) | (green << 8) | blue;
-// 	if (!strncmp(str, "C", 1))
-// 		info->rgb_c = (red << 16) | (green << 8) | blue;
-// 	return (0);
-// }
 
 int	save_path(char *str, t_info *info, int i, int j)
 {
@@ -155,6 +111,8 @@ int	save_path(char *str, t_info *info, int i, int j)
 	if (!str)
 		return (ft_printf(2, "Error: ft_strlcpy failed me.\n"));
 	path = ft_mydup(info->file[i] + (j - 1));
+	if (!xmp_extention_check(path))
+		return (-1);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (ft_printf(2, "Error: Invalid %s\
