@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:28:51 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/13 23:55:58 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:07:39 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	set_zero_mini(t_minimap *minimap)
 {
+	if (!minimap)
+		return ;
 	minimap->dx = 0;
 	minimap->dy = 0;
 	minimap->px = 0;
@@ -29,6 +31,7 @@ void	draw_player_body(t_game *game, int px, int py)
 	int i;
 	int	j;
 
+	set_zero_mini(game->minimap);
 	i = -3;
 	while (++i <= 2)
 	{
@@ -83,6 +86,7 @@ void	draw_player_arrow(t_game *game, int px, int py)
 {
 	int	dist;
 
+	set_zero_mini(game->minimap);
 	dist = 0;
 	while (++dist <= 4)
 		process_draw_arrow(game, px, py, dist);
@@ -95,6 +99,7 @@ void	draw_tile_if_in_circle(t_game *game, int tile_x, int tile_y, int color)
 	int	i;
 	int	j;
 
+	set_zero_mini(game->minimap);
 	center = MINIMAP_RADIUS_PIXELS;
 	i = -1;
 	while (++i < MINIMAP_SCALE)
@@ -164,6 +169,7 @@ void	draw_accurate_player_dot(t_game *game)
 	int		player_pixel_x;
 	int		player_pixel_y;
 
+	set_zero_mini(game->minimap);
 	offset_x = game->player.x - (int)game->player.x;
 	offset_y = game->player.y - (int)game->player.y;
 	player_pixel_x = MINIMAP_RADIUS_TILES * MINIMAP_SCALE\
@@ -180,6 +186,7 @@ void	draw_minimap_background_circle(t_game *game)
 	int	x;
 	int	y;
 
+	set_zero_mini(game->minimap);
 	x = -1;
 	while (++x < MINIMAP_DIAMETER)
 	{
@@ -200,6 +207,10 @@ void	draw_minimap_background_circle(t_game *game)
 
 void draw_minimap(t_game *game)
 {
+	game->minimap = malloc(sizeof(t_minimap));
+	if (!game->minimap)
+		return ((void)ft_printf(2, "Error: Minimap\n"));
+	set_zero_mini(game->minimap);
 	draw_minimap_background_circle(game);
 	draw_moving_minimap_tiles(game);
 	draw_accurate_player_dot(game);
