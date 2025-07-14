@@ -6,11 +6,27 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:13:01 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/14 19:10:52 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:59:46 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+
+void	destroy_text2(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (game->weapon_fire_textures[i].img)
+		{
+			mlx_destroy_image(game->mlx, game->weapon_fire_textures[i].img);
+			game->weapon_fire_textures[i].img = NULL;
+		}
+		i++;
+	}
+}
 
 void	destroy_textures(t_game *game)
 {
@@ -19,7 +35,7 @@ void	destroy_textures(t_game *game)
 	if (!game || !game->mlx)
 		return ;
 	i = 0;
-	while (i <= 4)
+	while (i < 5)
 	{
 		if (game->textures[i].img)
 		{
@@ -33,6 +49,7 @@ void	destroy_textures(t_game *game)
 		mlx_destroy_image(game->mlx, game->weapon_texture.img);
 		game->weapon_texture.img = NULL;
 	}
+	destroy_text2(game);
 }
 
 void	free_mat(char **matrix)
@@ -54,7 +71,7 @@ void	free_game_resources(t_game *game)
 {
 	if (game->mlx)
 	{
-		free_textures(game);
+		destroy_textures(game);
 		if (game->img)
 		{
 			mlx_destroy_image(game->mlx, game->img);
@@ -73,18 +90,3 @@ void	free_game_resources(t_game *game)
 		free(game->minimap);
 }
 
-void	free_textures(t_game *game)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		if (game->textures[i].img)
-		{
-			mlx_destroy_image(game->mlx, game->textures[i].img);
-			game->textures[i].img = NULL;
-		}
-		i++;
-	}
-}
