@@ -6,212 +6,101 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:28:51 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/14 18:07:39 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:06:23 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-void	set_zero_mini(t_minimap *minimap)
+void	put_tile_block(t_game *game, int map_x, int map_y,
+				int color)
 {
-	if (!minimap)
-		return ;
-	minimap->dx = 0;
-	minimap->dy = 0;
-	minimap->px = 0;
-	minimap->py = 0;
-	minimap->perp_x = 0;
-	minimap->perp_y = 0;
-	minimap->point_x = 0;
-	minimap->point_y = 0;
-}
+	int	dx;
+	int	dy;
+	int	screen_x;
+	int	screen_y;
 
-void	draw_player_body(t_game *game, int px, int py)
-{
-	int i;
-	int	j;
-
-	set_zero_mini(game->minimap);
-	i = -3;
-	while (++i <= 2)
+	dy = 0;
+	while (dy < game->minimap->h)
 	{
-		j = -3;
-		while (++j <= 2)
+		dx = 0;
+		while (dx < (game->minimap->w))
 		{
-			if (((i * i) + (j * j)) <= 4)
-			{
-				game->minimap->dx = px + i - MINIMAP_RADIUS_PIXELS;
-				game->minimap->dy = py + j - MINIMAP_RADIUS_PIXELS;
-				if (game->minimap->dx * game->minimap->dx + game->minimap->dy
-					* game->minimap->dy <= MINIMAP_RADIUS_PIXELS
-					* MINIMAP_RADIUS_PIXELS)
-					my_mlx_pixel_put(game, MINIMAP_OFFSET_X + px + i,
-						MINIMAP_OFFSET_Y + py + j, 0x00FF00);
-			}
+			screen_x = map_x * game->minimap->w + dx;
+			screen_y = map_y * game->minimap->h + dy;
+			if (screen_x < WINDOW_WIDTH && screen_y < WINDOW_HEIGHT / 2)
+				my_mlx_pixel_put(game, screen_x, screen_y, color);
+			dx++;
 		}
+		dy++;
 	}
-	set_zero_mini(game->minimap);
 }
 
-void	process_draw_arrow(t_game *game, int px, int py, int dist)
+void	draw_halfscreen_map(t_game *game)
 {
-	int	width;
-	int	w;
-
-	game->minimap->point_x = px + (int)(game->player.dir_x * dist);
-	game->minimap->point_y = py + (int)(game->player.dir_y * dist);
-	width = (5 - dist) / 2;
-	w = -width - 2;
-	while (++w <= width)
-	{
-		game->minimap->perp_x = game->minimap->point_x
-			+ (int)(-game->player.dir_y * w);
-		game->minimap->perp_y = game->minimap->point_y
-			+ (int)(game->player.dir_x * w);
-		game->minimap->dx = game->minimap->perp_x
-			- MINIMAP_RADIUS_PIXELS;
-		game->minimap->dy = game->minimap->perp_y
-			- MINIMAP_RADIUS_PIXELS;
-		if (game->minimap->dx * game->minimap->dx
-			+ game->minimap->dy * game->minimap->dy
-			<= MINIMAP_RADIUS_PIXELS * MINIMAP_RADIUS_PIXELS)
-			my_mlx_pixel_put(game, MINIMAP_OFFSET_X
-				+ game->minimap->perp_x, MINIMAP_OFFSET_Y
-				+ game->minimap->perp_y, 0x00FF00);
-	}
-	set_zero_mini(game->minimap);
-}
-
-void	draw_player_arrow(t_game *game, int px, int py)
-{
-	int	dist;
-
-	set_zero_mini(game->minimap);
-	dist = 0;
-	while (++dist <= 4)
-		process_draw_arrow(game, px, py, dist);
-	set_zero_mini(game->minimap);
-}
-
-void	draw_tile_if_in_circle(t_game *game, int tile_x, int tile_y, int color)
-{
-	int	center;
-	int	i;
-	int	j;
-
-	set_zero_mini(game->minimap);
-	center = MINIMAP_RADIUS_PIXELS;
-	i = -1;
-	while (++i < MINIMAP_SCALE)
-	{
-		j = -1;
-		while (++j < MINIMAP_SCALE)
-		{
-			game->minimap->px = tile_x * MINIMAP_SCALE + i;
-			game->minimap->py = tile_y * MINIMAP_SCALE + j;
-			game->minimap->dx = game->minimap->px - center;
-			game->minimap->dy = game->minimap->py - center;
-			if (game->minimap->dx * game->minimap->dx + game->minimap->dy
-					* game->minimap->dy <= center * center)
-				my_mlx_pixel_put(game, MINIMAP_OFFSET_X + game->minimap->px,
-					MINIMAP_OFFSET_Y + game->minimap->py, color);
-		}
-	}
-	set_zero_mini(game->minimap);
-}
-
-int	get_tile_color(char tile)
-{
-	if (tile == '1')
-		return (0x888888); // Wall
-	else if (tile == '0')
-		return (0xFFFFFF); // Floor
-	else if (tile == 'D')
-		return (0xFFA500); // Door_dash
-	else if (tile == ' ')
-		return (0x000000); // Spacess
-	return (0x222222);     //UNKOWN
-}
-
-void	draw_moving_minimap_tiles(t_game *game)
-{
-	int	map_x;
-	int	map_y;
-	int	color;
+	int		map_x;
+	int		map_y;
 	char	tile;
+	int		color;
 
-	game->px = (int)game->player.x;
-	game->py = (int)game->player.y;
-	map_y = (game->py - MINIMAP_RADIUS_TILES) - 1;
-	while (++map_y <= (game->py + MINIMAP_RADIUS_TILES))
+	game->minimap->w = WINDOW_WIDTH / ft_strlen(game->info->map[0]);
+	game->minimap->h = (WINDOW_HEIGHT / 2) / game->info->count;
+	map_y = 0;
+	while (map_y < game->info->count)
 	{
-		map_x = (game->px - MINIMAP_RADIUS_TILES) - 1;
-		while (++map_x <= (game->px + MINIMAP_RADIUS_TILES))
+		map_x = 0;
+		while (game->info->map[map_y][map_x])
 		{
-			if (map_y >= 0 && map_x >= 0 && map_y < game->info->count
-				&& map_x < (int)ft_strlen(game->info->map[map_y]))
-			{
-				tile = game->info->map[map_y][map_x];
-				color = get_tile_color(tile);
-				draw_tile_if_in_circle(game, map_x - game->px
-					+ MINIMAP_RADIUS_TILES, map_y - game->py
-					+ MINIMAP_RADIUS_TILES, color);
-			}
+			tile = game->info->map[map_y][map_x];
+			color = get_tile_color(tile);
+			put_tile_block(game, map_x, map_y, color);
+			map_x++;
 		}
+		map_y++;
 	}
-	set_zero_mini(game->minimap);
 }
 
-void	draw_accurate_player_dot(t_game *game)
+void	draw_player_on_half_map(t_game *game)
 {
-	double	offset_x;
-	double	offset_y;
-	int		player_pixel_x;
-	int		player_pixel_y;
+	int		tile_w;
+	int		tile_h;
+	int		radius;
 
 	set_zero_mini(game->minimap);
-	offset_x = game->player.x - (int)game->player.x;
-	offset_y = game->player.y - (int)game->player.y;
-	player_pixel_x = MINIMAP_RADIUS_TILES * MINIMAP_SCALE\
-		+ (int)(offset_x * MINIMAP_SCALE);
-	player_pixel_y = MINIMAP_RADIUS_TILES * MINIMAP_SCALE\
-		+ (int)(offset_y * MINIMAP_SCALE);
-	draw_player_body(game, player_pixel_x, player_pixel_y);
-	draw_player_arrow(game, player_pixel_x, player_pixel_y);
-	set_zero_mini(game->minimap);
-}
-
-void	draw_minimap_background_circle(t_game *game)
-{
-	int	x;
-	int	y;
-
-	set_zero_mini(game->minimap);
-	x = -1;
-	while (++x < MINIMAP_DIAMETER)
+	radius = 3;
+	tile_w = WINDOW_WIDTH / ft_strlen(game->info->map[0]);
+	tile_h = (WINDOW_HEIGHT / 2) / game->info->count;
+	game->minimap->px = game->player.x * tile_w;
+	game->minimap->py = game->player.y * tile_h;
+	game->minimap->dy = -radius;
+	while (game->minimap->dy <= radius)
 	{
-		y = -1;
-		while (++y < MINIMAP_DIAMETER)
+		game->minimap->dx = -radius;
+		while (game->minimap->dx <= radius)
 		{
-			game->minimap->dx = x - MINIMAP_RADIUS_PIXELS;
-			game->minimap->dy = y - MINIMAP_RADIUS_PIXELS;
 			if (game->minimap->dx * game->minimap->dx + game->minimap->dy
-				* game->minimap->dy <= MINIMAP_RADIUS_PIXELS
-				* MINIMAP_RADIUS_PIXELS)
-				my_mlx_pixel_put(game, MINIMAP_OFFSET_X + x,
-					MINIMAP_OFFSET_Y + y, 0x000000);
+				* game->minimap->dy <= radius * radius)
+				my_mlx_pixel_put(game, game->minimap->px + game->minimap->dx,
+					game->minimap->py + game->minimap->dy, 0x00FF00);
+			game->minimap->dx++;
 		}
+		game->minimap->dy++;
 	}
 	set_zero_mini(game->minimap);
 }
 
 void draw_minimap(t_game *game)
 {
-	game->minimap = malloc(sizeof(t_minimap));
-	if (!game->minimap)
-		return ((void)ft_printf(2, "Error: Minimap\n"));
-	set_zero_mini(game->minimap);
-	draw_minimap_background_circle(game);
-	draw_moving_minimap_tiles(game);
-	draw_accurate_player_dot(game);
+	if (game->minimap->full)
+	{
+		draw_halfscreen_map(game);
+		draw_player_on_half_map(game);
+	}
+	else
+	{
+		set_zero_mini(game->minimap);
+		draw_minimap_background_circle(game);
+		draw_moving_minimap_tiles(game);
+		draw_accurate_player_dot(game);
+	}
 }

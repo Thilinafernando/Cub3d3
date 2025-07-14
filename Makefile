@@ -20,7 +20,8 @@ GNL_SRC = get_next_line.c get_next_line_utils.c
 GNL_OBJECTS = $(addprefix obj/, $(notdir $(GNL_SRC:.c=.o)))
 
 EXECDIR = execution/
-EXEC = execution/game_controls.c execution/rendering.c execution/main.c
+EXEC = execution/game_controls.c execution/rendering.c execution/main.c execution/free.c execution/mlxinit.c execution/movement.c execution/ray.c execution/draw_wall.c \
+		execution/init_player.c
 
 UTILSDIR = Utils/
 UTILS =
@@ -31,10 +32,24 @@ PRC = parssing/parsing.c parsing_utils.c parsing_utils1.c parsing_utils2.c parsi
 BONUSDIR = bonus/
 BONUS = \
 	bonus/execution_bonus/control_mouse_bonus.c \
+	bonus/execution_bonus/control_mouse_bonus_utils.c \
+	bonus/execution_bonus/draw_wall_bonus.c \
+	bonus/execution_bonus/draw_wall_bonus_utils.c \
+	bonus/execution_bonus/draw_weapon_bonus.c \
+	bonus/execution_bonus/event_bonus.c \
+	bonus/execution_bonus/free_bonus.c \
 	bonus/execution_bonus/game_controls_bonus.c \
+	bonus/execution_bonus/game_controls_utils_bonus.c \
+	bonus/execution_bonus/init_bonus.c \
+	bonus/execution_bonus/init_player_bonus.c \
 	bonus/execution_bonus/main_bonus.c \
-	bonus/execution_bonus/rendering_bonus.c \
 	bonus/execution_bonus/draw_minimap.c\
+	bonus/execution_bonus/draw_mini1.c\
+	bonus/execution_bonus/draw_mini2.c\
+	bonus/execution_bonus/rendering_bonus.c \
+	bonus/execution_bonus/ray_bonus.c \
+	bonus/execution_bonus/texture_bonus.c \
+	bonus/execution_bonus/wall_door_bonus.c \
 	parssing/parsing.c \
 	parssing/parsing_utils.c \
 	parssing/parsing_utils1.c \

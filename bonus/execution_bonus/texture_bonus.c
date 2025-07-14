@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rendering.c                                        :+:      :+:    :+:   */
+/*   texture_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 17:20:40 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/12 21:14:57 by ilmahjou         ###   ########.fr       */
+/*   Created: 2025/07/12 22:33:38 by ilmahjou          #+#    #+#             */
+/*   Updated: 2025/07/13 20:54:35 by ilmahjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 int	load_texture(t_game *game, t_texture *texture, char *path)
 {
@@ -35,19 +35,20 @@ int	load_textures(t_game *game)
 		return (-1);
 	if (load_texture(game, &game->textures[3], game->info->ea) == -1)
 		return (-1);
-	return (0);
-}
-
-void	my_mlx_pixel_put(t_game *game, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
+	if (load_texture(game, &game->weapon_texture, "xpm/weapon.xpm") == -1)
 	{
-		dst = game->addr + (y * game->line_length
-				+ x * (game->bits_per_pixel / 8));
-		*(unsigned int *)dst = color;
+		ft_printf(2, "Error: Could not load weapon texture\n");
+		return (-1);
 	}
+	if (load_texture(game, &game->textures[4], "xpm/door.xpm") == -1)
+		return (-1);
+	if (load_texture(game, &game->weapon_fire_textures[0],
+			"xpm/weapon1.xpm") == -1)
+		return (-1);
+	if (load_texture(game, &game->weapon_fire_textures[1],
+			"xpm/weapon2.xpm") == -1)
+		return (-1);
+	return (0);
 }
 
 int	get_texture_color(t_texture *texture, int x, int y)
@@ -56,37 +57,9 @@ int	get_texture_color(t_texture *texture, int x, int y)
 
 	if (x >= 0 && x < texture->width && y >= 0 && y < texture->height)
 	{
-		dst = texture->addr + (y * texture->line_length
-				+ x * (texture->bits_per_pixel / 8));
+		dst = texture->addr + (y * texture->line_length + x
+				* (texture->bits_per_pixel / 8));
 		return (*(unsigned int *)dst);
 	}
 	return (0);
-}
-
-void	perform_dda(t_game *game, t_ray *ray)
-{
-	while (ray->hit == 0)
-	{
-		if (ray->side_dist_x < ray->side_dist_y)
-		{
-			ray->side_dist_x += ray->delta_dist_x;
-			ray->map_x += ray->step_x;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->side_dist_y += ray->delta_dist_y;
-			ray->map_y += ray->step_y;
-			ray->side = 1;
-		}
-		if (ray->map_y >= 0 && ray->map_y < game->info->count
-			&& ray->map_x >= 0
-			&& ray->map_x < (int)ft_strlen(game->info->map[ray->map_y]))
-		{
-			if (game->info->map[ray->map_y][ray->map_x] == '1')
-				ray->hit = 1;
-		}
-		else
-			ray->hit = 1;
-	}
 }

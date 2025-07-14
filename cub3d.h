@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:23:13 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/13 23:57:32 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/14 19:49:00 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,36 @@
 #define MINIMAP_OFFSET_X 10
 #define MINIMAP_OFFSET_Y 600
 
+typedef struct s_minimap
+{
+    int     dx;
+    int     dy;
+    int     px;
+    int     py;
+    int     point_x;
+    int     point_y;
+    int     perp_x;
+    int     perp_y;
+    int     full;
+    int	w;
+	int	h;
+} t_minimap;
+
+typedef struct s_draw_params
+{
+	int	tex_num;
+	int	tex_x;
+	int	x;
+}	t_draw_params;
+
+typedef struct s_wall_vars
+{
+	double	wall_x;
+	int		tex_x;
+	double	step;
+	double	tex_pos;
+	int		y;
+}	t_wall_vars;
 // this for the door is open or not ok thilina
 typedef struct s_door
 {
@@ -50,6 +80,7 @@ typedef struct s_door
 	int y;
 	int is_open;  // 0 = closed, 1 = open
 } t_door;
+
 
 typedef struct s_info
 {
@@ -111,18 +142,6 @@ typedef struct s_texture
     int height;
 } t_texture;
 
-typedef struct s_minimap
-{
-    int     dx;
-    int     dy;
-    int     px;
-    int     py;
-    int     point_x;
-    int     point_y;
-    int     perp_x;
-    int     perp_y;
-} t_minimap;
-
 typedef struct s_game
 {
     void *mlx;
@@ -136,6 +155,7 @@ typedef struct s_game
     t_player player;
     t_texture textures[5]; // NO, SO, WE, EA
     t_texture weapon_texture;
+    t_texture weapon_fire_textures[2];
     int keys[256];
     int mouse_x;           // Add this
     int mouse_y;           // Add this
@@ -143,16 +163,19 @@ typedef struct s_game
     int mouse_enabled;     // Add this
     t_door doors[MAX_DOORS];// bonus
     int door_count;// bonus
-    int	px; //i added it for the minimap
-	int	py;
+    int is_shooting;// for bonus
+    int shoot_timer; // frames to display the shooting sprite //bonus
+    int current_fire_frame; // 0 or 1
+    int	px;
+    int	py;
 	int	pixel_dx;
 	int	pixel_dy;
     t_minimap *minimap;
 } t_game;
 
 //parsing functions (your friend's code)
-bool	extention_check(char *str);
 bool	xmp_extention_check(char *str);
+bool	extention_check(char *str);
 int		paths_conditions(t_info *info, int i, int j, char *str);
 int		fill_file(char *map, t_info *info);
 int		fill_map(t_info *info);
@@ -209,7 +232,6 @@ int mouse_release(int button, int x, int y, t_game *game);
 int mouse_press(int button, int x, int y, t_game *game);
 int mouse_move(int x, int y, t_game *game);
 //minimap.c
-
 void	set_zero_mini(t_minimap *minimap);
 void	draw_player_body(t_game *game, int px, int py);
 void	process_draw_arrow(t_game *game, int px, int py, int dist);
@@ -221,4 +243,17 @@ void	draw_accurate_player_dot(t_game *game);
 void	draw_minimap_background_circle(t_game *game);
 void	draw_minimap(t_game *game);
 
+int	key_release(int keycode, t_game *game);
+int game_loop(t_game *game);
+int	close_game(t_game *game);
+int	get_texture_number(t_ray *ray);
+void	init_wall_vars(t_wall_vars *vars, t_game *game, t_ray *ray, int tex_num);
+int	calculate_tex_x(t_game *game, t_ray *ray, double wall_x, int tex_num);
+double	calculate_wall_x(t_game *game, t_ray *ray);
+void	draw_wall(t_game *game, t_ray *ray, int x);
+void	move_forward_bonus(t_game *game);
+void	move_backward_bonus(t_game *game);
+void	draw_texture_column(t_game *game, t_ray *ray, t_draw_params *params);
+void	get_door_texture(t_game *game, t_ray *ray, int *tex_num, double *wall_x);
+void	get_regular_wall_texture(t_game *game, t_ray *ray, int *tex_num, double *wall_x);
 #endif

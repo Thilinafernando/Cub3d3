@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:02:53 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/09 03:43:44 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:33:51 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_matrix(char **matrix)
 		j = 0;
 		while (matrix[i][j] != '\0')
 		{
-			putchar(matrix[i][j]);
+			ft_putchar(matrix[i][j]);
 			j++;
 		}
 		i++;
@@ -72,7 +72,8 @@ void	flood_fill(int x, int y, t_info *info)
 		return ;
 	if (info->tmp[y][x] == '0' || info->tmp[y][x] == 'W'
 		|| info->tmp[y][x] == 'E'
-		|| info->tmp[y][x] == 'S' || info->tmp[y][x] == 'N')
+		|| info->tmp[y][x] == 'S' || info->tmp[y][x] == 'N'
+		|| info->tmp[y][x] == 'D')
 	{
 		info->flood_flag = -42;
 		return ;

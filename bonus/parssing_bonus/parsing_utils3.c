@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:04:40 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/12 20:12:01 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:34:18 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	check_characters(t_info *info)
 		while (info->map[i][++j])
 		{
 			if (info->map[i][j] != '\n' && info->map[i][j] != '0'
-				&& info->map[i][j] != '1' && info->map[i][j] != 'D' && info->map[i][j] != 'W'
+				&& info->map[i][j] != '1' && info->map[i][j] != 'D'
+				&& info->map[i][j] != 'W'
 				&& info->map[i][j] != 'N' && info->map[i][j] != 'E'
 				&& info->map[i][j] != 'S' && ft_isspace(info->map[i][j]) == 0)
 				return (ft_printf(2, "Error: '%c' is not a\
@@ -112,7 +113,7 @@ int	save_path(char *str, t_info *info, int i, int j)
 		return (ft_printf(2, "Error: ft_strlcpy failed me.\n"));
 	path = ft_mydup(info->file[i] + (j - 1));
 	if (!xmp_extention_check(path))
-		return (-1);
+		return (free(path), -1);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (ft_printf(2, "Error: Invalid %s\

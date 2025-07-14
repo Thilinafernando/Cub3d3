@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:04:40 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/12 20:11:39 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:30:41 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	save_path(char *str, t_info *info, int i, int j)
 		return (ft_printf(2, "Error: ft_strlcpy failed me.\n"));
 	path = ft_mydup(info->file[i] + (j - 1));
 	if (!xmp_extention_check(path))
-		return (-1);
+		return (free(path), -1);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (ft_printf(2, "Error: Invalid %s\
