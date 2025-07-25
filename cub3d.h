@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:23:13 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/24 21:55:05 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:55:06 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,28 @@
 # define TEXTURE_SIZE 515
 # define MOVE_SPEED 0.05
 # define ROT_SPEED 0.05
-#define MAX_DOORS 128
-#define MINIMAP_SCALE 10
-#define MINIMAP_RADIUS_TILES 5
-#define MINIMAP_DIAMETER (MINIMAP_RADIUS_TILES * 2 * MINIMAP_SCALE)
-#define MINIMAP_RADIUS_PIXELS (MINIMAP_RADIUS_TILES * MINIMAP_SCALE)
-#define MINIMAP_OFFSET_X 10
-#define MINIMAP_OFFSET_Y 675
+# define MAX_DOORS 128
+# define MINIMAP_SCALE 10
+# define MINIMAP_RADIUS_TILES 5
+# define MINIMAP_DIAMETER 100
+# define MINIMAP_RADIUS_PIXELS 50
+# define MINIMAP_OFFSET_X 10
+# define MINIMAP_OFFSET_Y 675
 
 typedef struct s_minimap
 {
-    int     dx;
-    int     dy;
-    int     px;
-    int     py;
-    int     point_x;
-    int     point_y;
-    int     perp_x;
-    int     perp_y;
-    int     full;
-    int	w;
+	int	dx;
+	int	dy;
+	int	px;
+	int	py;
+	int	point_x;
+	int	point_y;
+	int	perp_x;
+	int	perp_y;
+	int	full;
+	int	w;
 	int	h;
-} t_minimap;
+}	t_minimap;
 
 typedef struct s_draw_params
 {
@@ -73,14 +73,14 @@ typedef struct s_wall_vars
 	double	tex_pos;
 	int		y;
 }	t_wall_vars;
+
 // this for the door is open or not ok thilina
 typedef struct s_door
 {
-	int x;
-	int y;
-	int is_open;  // 0 = closed, 1 = open
-} t_door;
-
+	int	x;
+	int	y;
+	int	is_open;
+}	t_door;
 
 typedef struct s_info
 {
@@ -102,78 +102,78 @@ typedef struct s_info
 
 typedef struct s_player
 {
-    double x;
-    double y;
-    double dir_x;
-    double dir_y;
-    double plane_x;
-    double plane_y;
-} t_player;
+	double	x;
+	double	y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+}	t_player;
 
 typedef struct s_ray
 {
-    double camera_x;
-    double ray_dir_x;
-    double ray_dir_y;
-    int map_x;
-    int map_y;
-    double side_dist_x;
-    double side_dist_y;
-    double delta_dist_x;
-    double delta_dist_y;
-    double perp_wall_dist;
-    int step_x;
-    int step_y;
-    int hit;
-    int side;
-    int line_height;
-    int draw_start;
-    int draw_end;
-} t_ray;
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int		map_x;
+	int		map_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+}	t_ray;
 
 typedef struct s_texture
 {
-    void *img;
-    char *addr;
-    int bits_per_pixel;
-    int line_length;
-    int endian;
-    int width;
-    int height;
-} t_texture;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_texture;
 
 typedef struct s_game
 {
-    void *mlx;
-    void *win;
-    void *img;
-    char *addr;
-    int bits_per_pixel;
-    int line_length;
-    int endian;
-    t_info *info;
-    t_player player;
-    t_texture textures[5]; // NO, SO, WE, EA
-    t_texture weapon_texture;
-    t_texture weapon_fire_textures[2];
-    int keys[256];
-    int mouse_x;           // Add this
-    int mouse_y;           // Add this
-    int prev_mouse_x;      // Add this
-    int mouse_enabled;     // Add this
-    t_door doors[MAX_DOORS];// bonus
-    int door_count;// bonus
-    int is_shooting;// for bonus
-    int shoot_timer; // frames to display the shooting sprite //bonus
-    int current_fire_frame; // 0 or 1
-    int	px;
-    int	py;
-	int	pixel_dx;
-	int	pixel_dy;
-    t_minimap *minimap;
-} t_game;
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	t_info		*info;
+	t_player	player;
+	t_texture	textures[5];
+	t_texture	weapon_texture;
+	t_texture	weapon_fire_textures[2];
+	int			keys[256];
+	int			mouse_x;
+	int			mouse_y;
+	int			prev_mouse_x;
+	int			mouse_enabled;
+	t_door		doors[MAX_DOORS];
+	int			door_count;
+	int			is_shooting;
+	int			shoot_timer;
+	int			current_fire_frame;
+	int			px;
+	int			py;
+	int			pixel_dx;
+	int			pixel_dy;
+	t_minimap	*minimap;
+}	t_game;
 
-//parsing functions (your friend's code)
+//parssing
 bool	xmp_extention_check(char *str);
 bool	extention_check(char *str);
 int		paths_conditions(t_info *info, int i, int j, char *str);
@@ -199,8 +199,10 @@ void	init_struct(t_info *info);
 int		rgb_convertion(t_info *info, char *str, int i, int j);
 int		save_path(char *str, t_info *info, int i, int j);
 void	free_all(t_info *info);
+int		rgb_return(char **rgb, char ***tmp);
 
-//rendering functions (your code)
+
+//rendering functions
 void	init_player(t_game *game);
 int		load_texture(t_game *game, t_texture *texture, char *path);
 int		load_textures(t_game *game);
@@ -211,10 +213,11 @@ void	calculate_ray(t_game *game, t_ray *ray, int x);
 void	draw_wall(t_game *game, t_ray *ray, int x);
 void	draw_floor_ceiling(t_game *game, t_ray *ray, int x);
 void	raycast(t_game *game);
-void draw_weapon(t_game *game);
-void init_doors(t_game *game);
-int is_door_open(t_game *game, int x, int y);
-int is_wall_or_closed_door(t_game *game, double x, double y);
+void	draw_weapon(t_game *game);
+void	init_doors(t_game *game);
+int		is_door_open(t_game *game, int x, int y);
+int		is_wall_or_closed_door(t_game *game, double x, double y);
+
 //game controls functions
 int		key_press(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);
@@ -222,38 +225,45 @@ void	move_player(t_game *game);
 int		game_loop(t_game *game);
 int		close_game(t_game *game);
 int		init_mlx(t_game *game);
-void    free_game_resources(t_game *game);
-void    free_textures(t_game *game);
-void    free_mat(char **matrix);
-void    try_open_close_door(t_game *game); //bonus
-void    try_toggle_door(t_game *game);
+void	free_game_resources(t_game *game);
+void	free_textures(t_game *game);
+void	free_mat(char **matrix);
+void	try_open_close_door(t_game *game);
+void	try_toggle_door(t_game *game);
+
 //control mouse.c
-int mouse_release(int button, int x, int y, t_game *game);
-int mouse_press(int button, int x, int y, t_game *game);
-int mouse_move(int x, int y, t_game *game);
+int		mouse_release(int button, int x, int y, t_game *game);
+int		mouse_press(int button, int x, int y, t_game *game);
+int		mouse_move(int x, int y, t_game *game);
+
 //minimap.c
 void	set_zero_mini(t_minimap *minimap);
 void	draw_player_body(t_game *game, int px, int py);
 void	process_draw_arrow(t_game *game, int px, int py, int dist);
 void	draw_player_arrow(t_game *game, int px, int py);
 void	draw_tile_if_in_circle(t_game *game, int tile_x, int tile_y, int color);
-int	    get_tile_color(char tile);
+int		get_tile_color(char tile);
 void	draw_moving_minimap_tiles(t_game *game);
 void	draw_accurate_player_dot(t_game *game);
 void	draw_minimap_background_circle(t_game *game);
 void	draw_minimap(t_game *game);
 
-int	key_release(int keycode, t_game *game);
-int game_loop(t_game *game);
-int	close_game(t_game *game);
-int	get_texture_number(t_ray *ray);
-void	init_wall_vars(t_wall_vars *vars, t_game *game, t_ray *ray, int tex_num);
-int	calculate_tex_x(t_game *game, t_ray *ray, double wall_x, int tex_num);
+//exec
+int		key_release(int keycode, t_game *game);
+int		game_loop(t_game *game);
+int		close_game(t_game *game);
+int		get_texture_number(t_ray *ray);
+void	init_wall_vars(t_wall_vars *vars, t_game *game,
+			t_ray *ray, int tex_num);
+int		calculate_tex_x(t_game *game, t_ray *ray, double wall_x, int tex_num);
 double	calculate_wall_x(t_game *game, t_ray *ray);
 void	draw_wall(t_game *game, t_ray *ray, int x);
 void	move_forward_bonus(t_game *game);
 void	move_backward_bonus(t_game *game);
 void	draw_texture_column(t_game *game, t_ray *ray, t_draw_params *params);
-void	get_door_texture(t_game *game, t_ray *ray, int *tex_num, double *wall_x);
-void	get_regular_wall_texture(t_game *game, t_ray *ray, int *tex_num, double *wall_x);
+void	get_door_texture(t_game *game, t_ray *ray,
+			int *tex_num, double *wall_x);
+void	get_regular_wall_texture(t_game *game, t_ray *ray,
+			int *tex_num, double *wall_x);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 19:36:26 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/24 21:42:10 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:43:23 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ bool	xmp_extention_check(char *str)
 	i = 0;
 	while (str[i] != '\0')
 		i++;
-	while(i >= 0 && str[i] != '.')
+	while (i >= 0 && str[i] != '.')
 		i--;
 	str = &str[i + 1];
 	if (ft_strcmp(str, "xpm"))

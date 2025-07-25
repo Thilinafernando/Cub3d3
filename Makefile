@@ -31,6 +31,12 @@ PRC = parssing/parsing.c parsing_utils.c parsing_utils1.c parsing_utils2.c parsi
 
 BONUSDIR = bonus/
 BONUS = \
+	bonus/parssing_bonus/parsingb.c \
+	bonus/parssing_bonus/parsing_utilsb.c \
+	bonus/parssing_bonus/parsing_utils1b.c \
+	bonus/parssing_bonus/parsing_utils2b.c \
+	bonus/parssing_bonus/parsing_utils3b.c \
+	bonus/parssing_bonus/parsing_utils4b.c \
 	bonus/execution_bonus/control_mouse_bonus.c \
 	bonus/execution_bonus/control_mouse_bonus_utils.c \
 	bonus/execution_bonus/draw_wall_bonus.c \
@@ -50,12 +56,6 @@ BONUS = \
 	bonus/execution_bonus/ray_bonus.c \
 	bonus/execution_bonus/texture_bonus.c \
 	bonus/execution_bonus/wall_door_bonus.c \
-	parssing/parsing.c \
-	parssing/parsing_utils.c \
-	parssing/parsing_utils1.c \
-	parssing/parsing_utils2.c \
-	parssing/parsing_utils3.c \
-	parssing/parsing_utils4.c \
 
 ALL_SRC = $(PRC) $(EXEC) $(UTILS)
 OBJECTS = $(addprefix obj/, $(notdir $(ALL_SRC:.c=.o)))
@@ -91,6 +91,11 @@ $(NAME_BONUS): $(LIBFT) mlx $(OBJECT_BONUS) $(GNL_OBJECTS) $(PRINT)
 
 # Object compilation rules, flat obj directory, source files in different dirs
 obj/%.o: bonus/execution_bonus/%.c
+	@mkdir -p $(dir $@)
+	@echo "Compiling $< ..."
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+
+obj/%.o: bonus/parssing_bonus/%.c
 	@mkdir -p $(dir $@)
 	@echo "Compiling $< ..."
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
@@ -144,7 +149,7 @@ clean_mlx:
 	@bash -c 'tput blink; echo -ne "Cleaning MLX     \r"; tput sgr0; sleep 2; echo "MLX Gone!     "'
 	@rm -rf $(MLXDIR)
 
-vall: all clean
-	valgrind --track-origins=yes -q --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ./cub3d map.cub
+#vall: all clean
+#	valgrind --track-origins=yes -q --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ./cub3d map.cub
 
 .PHONY: all bonus clean fclean re clean_mlx mlx

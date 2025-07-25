@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:28:51 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/14 20:06:23 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:32:53 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	draw_player_on_half_map(t_game *game)
 	set_zero_mini(game->minimap);
 }
 
-void draw_minimap(t_game *game)
+void	draw_minimap(t_game *game)
 {
 	if (game->minimap->full)
 	{

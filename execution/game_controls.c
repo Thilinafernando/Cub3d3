@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_controls.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:19:27 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/12 20:20:24 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:38:22 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	move_player(t_game *game)
 	if (game->keys[115] || game->keys[83])
 		move_backward(game);
 	if (game->keys[97] || game->keys[65])
-		rotate_left(game);
-	if (game->keys[100] || game->keys[68])
 		rotate_right(game);
+	if (game->keys[100] || game->keys[68])
+		rotate_left(game);
 }

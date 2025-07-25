@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:05:18 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/14 20:05:39 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:30:23 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	set_zero_mini(t_minimap *minimap)
 
 void	draw_player_body(t_game *game, int px, int py)
 {
-	int i;
+	int	i;
 	int	j;
 
 	set_zero_mini(game->minimap);
@@ -112,7 +112,7 @@ void	draw_tile_if_in_circle(t_game *game, int tile_x, int tile_y, int color)
 			game->minimap->dx = game->minimap->px - center;
 			game->minimap->dy = game->minimap->py - center;
 			if (game->minimap->dx * game->minimap->dx + game->minimap->dy
-					* game->minimap->dy <= center * center)
+				* game->minimap->dy <= center * center)
 				my_mlx_pixel_put(game, MINIMAP_OFFSET_X + game->minimap->px,
 					MINIMAP_OFFSET_Y + game->minimap->py, color);
 		}

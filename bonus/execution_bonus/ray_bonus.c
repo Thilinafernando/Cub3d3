@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:34:42 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/13 23:43:24 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:40:45 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,17 @@ static int	check_hit_tile(t_game *game, t_ray *ray)
 {
 	char	tile;
 
-	// Check if ray is outside map bounds
 	if (ray->map_y < 0 || ray->map_y >= game->info->count
 		|| ray->map_x < 0
 		|| ray->map_x >= (int)ft_strlen(game->info->map[ray->map_y]))
 	{
-		return (1); // Hit wall (outside bounds)
+		return (1);
 	}
-	
-	// Get the tile at current position
 	tile = game->info->map[ray->map_y][ray->map_x];
-	
-	// Check if it's a wall or closed door
-	if (tile == '1' || (tile == 'D' && !is_door_open(game, ray->map_x, ray->map_y)))
-		return (1); // Hit wall
-	
-	// For all other tiles ('0', 'N', 'S', 'E', 'W'), continue the ray
-	return (0); // No hit, continue
+	if (tile == '1' || (tile == 'D'
+			&& !is_door_open(game, ray->map_x, ray->map_y)))
+		return (1);
+	return (0);
 }
 
 void	perform_dda(t_game *game, t_ray *ray)

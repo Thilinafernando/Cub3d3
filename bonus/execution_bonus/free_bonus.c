@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:13:01 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/14 20:59:46 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:33:08 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,3 @@ void	free_game_resources(t_game *game)
 	if (game->minimap)
 		free(game->minimap);
 }
-

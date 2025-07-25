@@ -6,20 +6,22 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:06:15 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/14 20:17:29 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:57:21 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// rand from 100 to 255
+
 #include "../../cub3d.h"
 
-int get_tile_color(char tile)
+int	get_tile_color(char tile)
 {
-	int green_shade;
+	int	red_shade;
 
-	if (tile == '1') // Walls
+	if (tile == '1')
 	{
-		green_shade = 100 + rand() % 156; // from 100 to 255
-		return (green_shade << 20);
+		red_shade = 100 + rand() % 156;
+		return (red_shade << 20);
 	}
 	else if (tile == '0')
 		return (0x000000);
@@ -34,9 +36,9 @@ int get_tile_color(char tile)
 
 void	draw_moving_minimap_tiles(t_game *game)
 {
-	int	map_x;
-	int	map_y;
-	int	color;
+	int		map_x;
+	int		map_y;
+	int		color;
 	char	tile;
 
 	game->px = (int)game->player.x;
@@ -71,9 +73,9 @@ void	draw_accurate_player_dot(t_game *game)
 	set_zero_mini(game->minimap);
 	offset_x = game->player.x - (int)game->player.x;
 	offset_y = game->player.y - (int)game->player.y;
-	player_pixel_x = MINIMAP_RADIUS_TILES * MINIMAP_SCALE\
+	player_pixel_x = MINIMAP_RADIUS_TILES * MINIMAP_SCALE
 		+ (int)(offset_x * MINIMAP_SCALE);
-	player_pixel_y = MINIMAP_RADIUS_TILES * MINIMAP_SCALE\
+	player_pixel_y = MINIMAP_RADIUS_TILES * MINIMAP_SCALE
 		+ (int)(offset_y * MINIMAP_SCALE);
 	draw_player_body(game, player_pixel_x, player_pixel_y);
 	draw_player_arrow(game, player_pixel_x, player_pixel_y);

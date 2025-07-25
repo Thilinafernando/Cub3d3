@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   parsing_utilsb.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:05:56 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/24 21:39:45 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:41:12 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ int	paths(t_info *info)
 		if (paths_check(info, i, str) == -1)
 			return (-1);
 	}
-	if (!info->ea || !info->no || !info->so || !info->we)
+	if (!info->ea || !info->no || !info->so || !info->we
+		|| info->rgb_c == -42 || info->rgb_f == -42)
 		return (ft_printf(2, "Error: Not all textures are"
-			" included in the file.\n"));
+				" included in the file.\n"));
 	return (0);
 }
 

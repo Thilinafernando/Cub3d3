@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:04:40 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/24 21:41:59 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:45:51 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	check_characters(t_info *info)
 		while (info->map[i][++j])
 		{
 			if (info->map[i][j] != '\n' && info->map[i][j] != '0'
-				&& info->map[i][j] != '1' && info->map[i][j] != 'D' && info->map[i][j] != 'W'
+				&& info->map[i][j] != '1' && info->map[i][j] != 'W'
 				&& info->map[i][j] != 'N' && info->map[i][j] != 'E'
 				&& info->map[i][j] != 'S' && ft_isspace(info->map[i][j]) == 0)
 				return (ft_printf(2, "Error: '%c' is not a"
-					" valid character for the map.\n", info->map[i][j]));
+						" valid character for the map.\n", info->map[i][j]));
 		}
 	}
 	return (0);
@@ -96,9 +96,9 @@ int	rgb_convertion(t_info *info, char *str, int i, int j)
 	if (red < 0 || red > 255 || green < 0 || green > 255
 		|| blue < 0 || blue > 255)
 		return (ft_printf(2, "Error: Invalid RGB values.\n"));
-	if (!ft_strncmp(str, "F", 1))
+	if (!ft_strncmp(str, "F", 1) && info->rgb_f == -42)
 		info->rgb_f = (red << 16) | (green << 8) | blue;
-	if (!ft_strncmp(str, "C", 1))
+	if (!ft_strncmp(str, "C", 1) && info->rgb_c == -42)
 		info->rgb_c = (red << 16) | (green << 8) | blue;
 	return (0);
 }
@@ -115,16 +115,19 @@ int	save_path(char *str, t_info *info, int i, int j)
 		return (free(path), -1);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		return (ft_printf(2, "Error: Invalid %s"
-			" texture. PATH: %s\n", str, path));
+		return (ft_printf(2, "Error: Invalid %s texture. PATH:"
+			" %s\n", str, path), close(fd), free(path), -1);
 	close(fd);
-	if (!ft_strcmp(str, "NO"))
+	if (!ft_strcmp(str, "NO") && !info->no)
 		info->no = path;
-	if (!ft_strcmp(str, "SO"))
+	else if (!ft_strcmp(str, "SO") && !info->so)
 		info->so = path;
-	if (!ft_strcmp(str, "WE"))
+	else if (!ft_strcmp(str, "WE") && !info->we)
 		info->we = path;
-	if (!ft_strcmp(str, "EA"))
+	else if (!ft_strcmp(str, "EA") && !info->ea)
 		info->ea = path;
+	else
+		return (ft_printf(2, "MINOR Error: %s"
+			" texture is repeated.\n", str), free(path), 0);
 	return (0);
 }

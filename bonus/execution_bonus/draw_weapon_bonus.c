@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_weapon_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:41:28 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/13 20:40:14 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:35:43 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	draw_weapon(t_game *game)
 	int			y_start;
 
 	weapon = get_weapon_texture(game);
-	x_start = (WINDOW_WIDTH - weapon->width) / 2;
+	x_start = (WINDOW_WIDTH - weapon->width) - 20;
 	y_start = WINDOW_HEIGHT - weapon->height;
 	draw_weapon_pixels(game, weapon, x_start, y_start);
 }

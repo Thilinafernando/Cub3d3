@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils3.c                                   :+:      :+:    :+:   */
+/*   parsing_utils3b.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:04:40 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/24 21:40:45 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:42:56 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_characters(t_info *info)
 				&& info->map[i][j] != 'N' && info->map[i][j] != 'E'
 				&& info->map[i][j] != 'S' && ft_isspace(info->map[i][j]) == 0)
 				return (ft_printf(2, "Error: '%c' is not a"
-					" valid character for the map.\n", info->map[i][j]));
+						" valid character for the map.\n", info->map[i][j]));
 		}
 	}
 	return (0);
@@ -88,7 +88,7 @@ int	rgb_convertion(t_info *info, char *str, int i, int j)
 		return (ft_printf(2, "Error: Malloc failed.\n"));
 	tmp = ft_split(rgb, ',');
 	if (!tmp || !tmp[0] || !tmp[1] || !tmp[2])
-		return (ft_printf(2, "Error: Wrong entries for rgb.\n"));
+		return (rgb_return(&rgb, &tmp));
 	free(rgb);
 	red = ft_atoi(tmp[0]);
 	green = ft_atoi(tmp[1]);
@@ -116,16 +116,19 @@ int	save_path(char *str, t_info *info, int i, int j)
 		return (free(path), -1);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		return (ft_printf(2, "Error: Invalid %s"
-			" texture. PATH: %s\n", str, path));
+		return (ft_printf(2, "Error: Invalid %s texture. PATH:"
+			" %s\n", str, path), close(fd), free(path), -1);
 	close(fd);
-	if (!ft_strcmp(str, "NO"))
+	if (!ft_strcmp(str, "NO") && !info->no)
 		info->no = path;
-	if (!ft_strcmp(str, "SO"))
+	else if (!ft_strcmp(str, "SO") && !info->so)
 		info->so = path;
-	if (!ft_strcmp(str, "WE"))
+	else if (!ft_strcmp(str, "WE") && !info->we)
 		info->we = path;
-	if (!ft_strcmp(str, "EA"))
+	else if (!ft_strcmp(str, "EA") && !info->ea)
 		info->ea = path;
+	else
+		return (ft_printf(2, "MINOR Error: %s"
+			" texture is repeated.\n", str), free(path), 0);
 	return (0);
 }

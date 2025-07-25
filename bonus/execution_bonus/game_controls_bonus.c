@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:19:27 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/14 19:20:24 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:37:45 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ static void	handle_movement_keys(t_game *game)
 static void	handle_rotation_keys(t_game *game)
 {
 	if (game->keys[97] || game->keys[65])
-		rotate_player(game, ROT_SPEED);
-	if (game->keys[100] || game->keys[68])
 		rotate_player(game, -ROT_SPEED);
+	if (game->keys[100] || game->keys[68])
+		rotate_player(game, ROT_SPEED);
 }
 
 void	move_player(t_game *game)

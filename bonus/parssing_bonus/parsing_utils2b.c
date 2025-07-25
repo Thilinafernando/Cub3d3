@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils2.c                                   :+:      :+:    :+:   */
+/*   parsing_utils2b.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:02:53 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/24 21:40:15 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:41:33 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_matrix(char **matrix)
 		j = 0;
 		while (matrix[i][j] != '\0')
 		{
-			ft_putchar(matrix[i][j]);
+			ft_putcharr(1, matrix[i][j]);
 			j++;
 		}
 		i++;
@@ -99,6 +99,6 @@ int	check_playable(t_info *info)
 		&& info->map[info->player_y][info->player_x - 1] != '0'
 		&& info->map[info->player_y - 1][info->player_x] != '0')
 		return (ft_printf(2, "Error: Map does not contain"
-			" any player accessable room.\n"));
+				" any player accessable room.\n"));
 	return (0);
 }

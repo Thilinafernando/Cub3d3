@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:15:37 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/14 18:54:48 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:34:27 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,15 @@ int	init_mlx(t_game *game)
 	return (0);
 }
 
+//added condition to skip the green screen we make
 void	my_mlx_pixel_put(t_game *game, int x, int y, int color)
 {
 	char	*dst;
 
 	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
 	{
-		if (color == 0x51FF00) // Skip this pixel (treat as transparent)
-			return;
+		if (color == 0x51FF00)
+			return ;
 		dst = game->addr + (y * game->line_length + x
 				* (game->bits_per_pixel / 8));
 		*(unsigned int *)dst = color;

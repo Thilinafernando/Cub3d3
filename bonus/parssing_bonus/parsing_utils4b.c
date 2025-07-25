@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils4.c                                   :+:      :+:    :+:   */
+/*   parsing_utils4b.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 19:36:26 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/24 21:41:01 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:23:35 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ bool	xmp_extention_check(char *str)
 	i = 0;
 	while (str[i] != '\0')
 		i++;
-	while(i >= 0 && str[i] != '.')
+	while (i >= 0 && str[i] != '.')
 		i--;
 	str = &str[i + 1];
 	if (ft_strcmp(str, "xpm"))
@@ -52,4 +52,12 @@ bool	xmp_extention_check(char *str)
 		return (false);
 	}
 	return (true);
+}
+
+int	rgb_return(char **rgb, char ***tmp)
+{
+	ft_printf(2, "Error: Wrong entries for rgb.\n");
+	free(*(rgb));
+	free_mat(*(tmp));
+	return (-1);
 }
