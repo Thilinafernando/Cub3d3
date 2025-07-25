@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:02:53 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/14 18:33:51 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:40:15 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	check_playable(t_info *info)
 		&& info->map[info->player_y + 1][info->player_x] != '0'
 		&& info->map[info->player_y][info->player_x - 1] != '0'
 		&& info->map[info->player_y - 1][info->player_x] != '0')
-		return (ft_printf(2, "Error: Map does not contain\
-			any player accessable room.\n"));
+		return (ft_printf(2, "Error: Map does not contain"
+			" any player accessable room.\n"));
 	return (0);
 }

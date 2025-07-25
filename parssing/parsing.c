@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:59:05 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/06 17:21:25 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:43:26 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	fill_file(char *map, t_info *info)
 	int	size;
 
 	i = -1;
-	fd = open(map, O_RDONLY);
+	fd = open(map, O_RDONLY | O_EXCL);
 	if (fd == -1)
 		return (ft_printf(2, "Error: Open failed.\n"));
 	size = count_lines(map);

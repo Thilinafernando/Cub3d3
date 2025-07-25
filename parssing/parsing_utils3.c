@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:04:40 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/14 18:30:41 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:41:59 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	check_characters(t_info *info)
 				&& info->map[i][j] != '1' && info->map[i][j] != 'D' && info->map[i][j] != 'W'
 				&& info->map[i][j] != 'N' && info->map[i][j] != 'E'
 				&& info->map[i][j] != 'S' && ft_isspace(info->map[i][j]) == 0)
-				return (ft_printf(2, "Error: '%c' is not a\
-					valid character for the map.\n", info->map[i][j]));
+				return (ft_printf(2, "Error: '%c' is not a"
+					" valid character for the map.\n", info->map[i][j]));
 		}
 	}
 	return (0);
@@ -115,8 +115,8 @@ int	save_path(char *str, t_info *info, int i, int j)
 		return (free(path), -1);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		return (ft_printf(2, "Error: Invalid %s\
-			texture. PATH: %s\n", str, path));
+		return (ft_printf(2, "Error: Invalid %s"
+			" texture. PATH: %s\n", str, path));
 	close(fd);
 	if (!ft_strcmp(str, "NO"))
 		info->no = path;

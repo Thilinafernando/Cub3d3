@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:23:13 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/14 19:49:00 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:55:05 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@
 # define WINDOW_WIDTH 900
 # define WINDOW_HEIGHT 800
 # define TEXTURE_SIZE 515
-# define MOVE_SPEED 0.1
+# define MOVE_SPEED 0.05
 # define ROT_SPEED 0.05
 #define MAX_DOORS 128
-#define MINIMAP_SCALE 8
+#define MINIMAP_SCALE 10
 #define MINIMAP_RADIUS_TILES 5
 #define MINIMAP_DIAMETER (MINIMAP_RADIUS_TILES * 2 * MINIMAP_SCALE)
 #define MINIMAP_RADIUS_PIXELS (MINIMAP_RADIUS_TILES * MINIMAP_SCALE)
 #define MINIMAP_OFFSET_X 10
-#define MINIMAP_OFFSET_Y 600
+#define MINIMAP_OFFSET_Y 675
 
 typedef struct s_minimap
 {

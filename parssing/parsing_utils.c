@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:05:56 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/14 18:31:22 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:39:12 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	paths(t_info *info)
 			return (-1);
 	}
 	if (!info->ea || !info->no || !info->so || !info->we)
-		return (ft_printf(2, "Error: Not all textures are\
-			 included in the file.\n"));
+		return (ft_printf(2, "Error: Not all textures are"
+			" included in the file.\n"));
 	return (0);
 }
 

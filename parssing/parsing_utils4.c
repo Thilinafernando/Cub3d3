@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 19:36:26 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/14 18:30:29 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:42:10 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ bool	xmp_extention_check(char *str)
 	str = &str[i + 1];
 	if (ft_strcmp(str, "xpm"))
 	{
-		ft_printf(2, "Error: Incorrect extention for texture\
-			files.\n");
+		ft_printf(2, "Error: Incorrect extention for texture"
+			" files.\n");
 		return (false);
 	}
 	return (true);
