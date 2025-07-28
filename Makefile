@@ -23,6 +23,7 @@ GNL_OBJECTS = $(addprefix obj/, $(notdir $(GNL_SRC:.c=.o)))
 
 EXECDIR = execution/
 EXEC = \
+	execution/arrow_move.c \
 	execution/game_controls.c \
 	execution/rendering.c \
 	execution/main.c \
@@ -71,6 +72,7 @@ BONUS = \
 	bonus/execution_bonus/ray_bonus.c \
 	bonus/execution_bonus/texture_bonus.c \
 	bonus/execution_bonus/wall_door_bonus.c \
+	bonus/execution_bonus/arrow_move_bonus.c \
 
 ALL_SRC = $(PRC) $(EXEC)
 OBJECTS = $(addprefix obj/, $(notdir $(ALL_SRC:.c=.o)))

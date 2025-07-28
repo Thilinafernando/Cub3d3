@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_controls_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
+/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:19:27 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/25 17:37:45 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:12:14 by ilmahjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ static void	handle_movement_keys(t_game *game)
 		move_forward_bonus(game);
 	if (game->keys[115] || game->keys[83])
 		move_backward_bonus(game);
+	if (game->left_arrow)
+		rotate_player(game, -ROT_SPEED);
+	if (game->right_arrow)
+		rotate_player(game, ROT_SPEED);
 	if (game->keys[109] && !prev_m_state)
 		toggle_minimap(game);
 	prev_m_state = game->keys[109];
@@ -59,9 +63,9 @@ static void	handle_movement_keys(t_game *game)
 static void	handle_rotation_keys(t_game *game)
 {
 	if (game->keys[97] || game->keys[65])
-		rotate_player(game, -ROT_SPEED);
+		move_left_b(game);
 	if (game->keys[100] || game->keys[68])
-		rotate_player(game, ROT_SPEED);
+		move_right_b(game);
 }
 
 void	move_player(t_game *game)

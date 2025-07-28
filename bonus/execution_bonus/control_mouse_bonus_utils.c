@@ -6,7 +6,7 @@
 /*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 22:01:01 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/13 22:01:57 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:43:35 by ilmahjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@ int	mouse_press(int button, int x, int y, t_game *game)
 	{
 		game->is_shooting = 1;
 		game->shoot_timer = 5;
-	}
-	else if (button == 3)
-	{
-		game->mouse_enabled = !game->mouse_enabled;
-		if (game->mouse_enabled)
-			printf("Mouse look enabled\n");
-		else
-			printf("Mouse look disabled\n");
 	}
 	return (0);
 }

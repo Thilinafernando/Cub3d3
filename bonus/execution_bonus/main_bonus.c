@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
+/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:20:43 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/14 19:15:10 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:50:47 by ilmahjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ static void	init_game_struct(t_game *game)
 	game->minimap->full = 0;
 	game->prev_mouse_x = -1;
 	game->mouse_enabled = 1;
+	game->left_arrow = 0;
+	game->right_arrow = 0;
+	game->hand_timer = 0;
+	game->is_using_hand = 0;
 }
 
 static int	validate_input(int ac, char **av, t_info *info)

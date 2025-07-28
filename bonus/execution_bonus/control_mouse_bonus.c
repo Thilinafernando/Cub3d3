@@ -6,13 +6,13 @@
 /*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 23:13:24 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/13 22:03:36 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:46:32 by ilmahjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-static int	ft_abs(int n)
+int	ft_abs(int n)
 {
 	if (n < 0)
 		return (-n);

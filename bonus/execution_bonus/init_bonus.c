@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
+/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:15:37 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/25 17:34:27 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:53:19 by ilmahjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	init_mlx(t_game *game)
 	return (0);
 }
 
-//added condition to skip the green screen we make
 void	my_mlx_pixel_put(t_game *game, int x, int y, int color)
 {
 	char	*dst;

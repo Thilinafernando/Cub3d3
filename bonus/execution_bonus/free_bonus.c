@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
+/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:13:01 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/25 17:33:08 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:34:52 by ilmahjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ void	destroy_text2(t_game *game)
 			game->weapon_fire_textures[i].img = NULL;
 		}
 		i++;
+	}
+	if (game->hand_texture.img)
+	{
+		mlx_destroy_image(game->mlx, game->hand_texture.img);
+		game->hand_texture.img = NULL;
 	}
 }
 
@@ -49,6 +54,7 @@ void	destroy_textures(t_game *game)
 		mlx_destroy_image(game->mlx, game->weapon_texture.img);
 		game->weapon_texture.img = NULL;
 	}
+	
 	destroy_text2(game);
 }
 

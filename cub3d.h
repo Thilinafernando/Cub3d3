@@ -165,11 +165,16 @@ typedef struct s_game
 	int			door_count;
 	int			is_shooting;
 	int			shoot_timer;
+	int			is_using_hand;
+	int			hand_timer;
+	t_texture	hand_texture;
 	int			current_fire_frame;
 	int			px;
 	int			py;
 	int			pixel_dx;
 	int			pixel_dy;
+	int			left_arrow;
+	int			right_arrow;
 	t_minimap	*minimap;
 }	t_game;
 
@@ -251,6 +256,12 @@ void	draw_accurate_player_dot(t_game *game);
 void	draw_minimap_background_circle(t_game *game);
 void	draw_minimap(t_game *game);
 
+//arrow_move_bonus.c
+void	move_left_b(t_game *game);
+void	move_right_b(t_game *game);
+//arrow_move.c
+void	move_left(t_game *game);
+void	move_right(t_game *game);
 //exec
 int		key_release(int keycode, t_game *game);
 int		game_loop(t_game *game);

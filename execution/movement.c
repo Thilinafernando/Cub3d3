@@ -6,7 +6,7 @@
 /*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 20:17:41 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/12 21:16:24 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:20:26 by ilmahjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ int	key_press(int keycode, t_game *game)
 {
 	if (keycode >= 0 && keycode < 256)
 		game->keys[keycode] = 1;
+	if (keycode == 65361)
+		game->left_arrow = 1;
+	if (keycode == 65363)
+		game->right_arrow = 1;
 	if (keycode == 65307)
 		close_game(game);
 	return (0);
@@ -25,6 +29,10 @@ int	key_release(int keycode, t_game *game)
 {
 	if (keycode >= 0 && keycode < 256)
 		game->keys[keycode] = 0;
+	if (keycode == 65361)
+		game->left_arrow = 0;
+	if (keycode == 65363)
+		game->right_arrow = 0;
 	return (0);
 }
 

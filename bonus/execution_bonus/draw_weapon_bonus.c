@@ -3,24 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   draw_weapon_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
+/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:41:28 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/25 17:35:43 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:30:43 by ilmahjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-static t_texture	*get_weapon_texture(t_game *game)
+static void	update_weapon_timers(t_game *game)
 {
-	t_texture	*weapon;
-	int			frame;
-
-	if (game->is_shooting)
+	if (game->is_using_hand)
 	{
-		frame = (game->shoot_timer / 5) % 2;
-		weapon = &game->weapon_fire_textures[frame];
+		game->hand_timer--;
+		if (game->hand_timer <= 0)
+		{
+			game->is_using_hand = 0;
+			game->hand_timer = 0;
+		}
+	}
+	else if (game->is_shooting)
+	{
 		game->shoot_timer--;
 		if (game->shoot_timer <= 0)
 		{
@@ -28,11 +32,22 @@ static t_texture	*get_weapon_texture(t_game *game)
 			game->shoot_timer = 0;
 		}
 	}
-	else
+}
+
+static t_texture	*get_current_texture(t_game *game)
+{
+	int	frame;
+
+	update_weapon_timers(game);
+	if (game->is_using_hand)
+		return (&game->hand_texture);
+	else if (game->is_shooting)
 	{
-		weapon = &game->weapon_texture;
+		frame = (game->shoot_timer / 5) % 2;
+		return (&game->weapon_fire_textures[frame]);
 	}
-	return (weapon);
+	else
+		return (&game->weapon_texture);
 }
 
 static void	draw_weapon_pixels(t_game *game, t_texture *weapon,
@@ -59,12 +74,20 @@ static void	draw_weapon_pixels(t_game *game, t_texture *weapon,
 
 void	draw_weapon(t_game *game)
 {
-	t_texture	*weapon;
+	t_texture	*texture;
 	int			x_start;
 	int			y_start;
 
-	weapon = get_weapon_texture(game);
-	x_start = (WINDOW_WIDTH - weapon->width) - 20;
-	y_start = WINDOW_HEIGHT - weapon->height;
-	draw_weapon_pixels(game, weapon, x_start, y_start);
+	texture = get_current_texture(game);
+	if (game->is_using_hand)
+	{
+		x_start = (WINDOW_WIDTH - texture->width) / 2;
+		y_start = WINDOW_HEIGHT - texture->height;
+	}
+	else
+	{
+		x_start = WINDOW_WIDTH - texture->width - 30;
+		y_start = WINDOW_HEIGHT - texture->height;
+	}
+	draw_weapon_pixels(game, texture, x_start, y_start);
 }

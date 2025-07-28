@@ -6,7 +6,7 @@
 /*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:33:38 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/13 20:54:35 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:44:08 by ilmahjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	load_textures(t_game *game)
 		return (-1);
 	if (load_texture(game, &game->weapon_fire_textures[0],
 			"xpm/weapon1.xpm") == -1)
+		return (-1);
+	if (load_texture(game, &game->hand_texture, "xpm/hand.xpm") == -1)
 		return (-1);
 	if (load_texture(game, &game->weapon_fire_textures[1],
 			"xpm/weapon2.xpm") == -1)
