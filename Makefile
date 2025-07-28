@@ -16,18 +16,32 @@ PRINTDIR = libprintf/
 PRINT = $(PRINTDIR)libftprintf.a
 
 GNL = get_next_line/
-GNL_SRC = get_next_line.c get_next_line_utils.c
+GNL_SRC = \
+	get_next_line/get_next_line.c \
+	get_next_line/get_next_line_utils.c
 GNL_OBJECTS = $(addprefix obj/, $(notdir $(GNL_SRC:.c=.o)))
 
 EXECDIR = execution/
-EXEC = execution/game_controls.c execution/rendering.c execution/main.c execution/free.c execution/mlxinit.c execution/movement.c execution/ray.c execution/draw_wall.c \
-		execution/init_player.c
-
-UTILSDIR = Utils/
-UTILS =
+EXEC = \
+	execution/game_controls.c \
+	execution/rendering.c \
+	execution/main.c \
+	execution/free.c \
+	execution/mlxinit.c \
+	execution/movement.c \
+	execution/ray.c \
+	execution/draw_wall.c \
+	execution/init_player.c
 
 PARSDIR = parssing/
-PRC = parssing/parsing.c parsing_utils.c parsing_utils1.c parsing_utils2.c parsing_utils3.c parsing_utils4.c
+PRC = \
+	parssing/parsing.c \
+	parssing/parsing_utils.c \
+	parssing/parsing_utils1.c \
+	parssing/parsing_utils2.c \
+	parssing/parsing_utils3.c \
+	parssing/parsing_utils4.c \
+	parssing/parsing_utils5.c
 
 BONUSDIR = bonus/
 BONUS = \
@@ -37,6 +51,7 @@ BONUS = \
 	bonus/parssing_bonus/parsing_utils2b.c \
 	bonus/parssing_bonus/parsing_utils3b.c \
 	bonus/parssing_bonus/parsing_utils4b.c \
+	bonus/parssing_bonus/parsing_utils5b.c \
 	bonus/execution_bonus/control_mouse_bonus.c \
 	bonus/execution_bonus/control_mouse_bonus_utils.c \
 	bonus/execution_bonus/draw_wall_bonus.c \
@@ -57,11 +72,18 @@ BONUS = \
 	bonus/execution_bonus/texture_bonus.c \
 	bonus/execution_bonus/wall_door_bonus.c \
 
-ALL_SRC = $(PRC) $(EXEC) $(UTILS)
+ALL_SRC = $(PRC) $(EXEC)
 OBJECTS = $(addprefix obj/, $(notdir $(ALL_SRC:.c=.o)))
 OBJECT_BONUS = $(addprefix obj/, $(notdir $(BONUS:.c=.o)))
 
-# Build MLX if not already
+
+all: $(NAME)
+
+$(NAME): $(LIBFT) mlx $(OBJECTS) $(GNL_OBJECTS) $(PRINT)
+	@bash -c 'tput blink; echo -ne "Compiling Cub3d     \r"; tput sgr0; sleep 0.5; echo "Cub3d is ready to be played!     "'
+	@$(CC) $(CFLAGS) $(OBJECTS) $(GNL_OBJECTS) -o $(NAME) $(MLX_FLAGS) $(LIBFT) $(PRINT)
+
+# Build MLX if not already - moved after all target
 mlx:
 	@if [ ! -f "$(MLX)" ]; then \
         if [ ! -d "$(MLXDIR)" ]; then \
@@ -74,13 +96,6 @@ mlx:
     else \
         echo "MLX already built, skipping..."; \
     fi
-
-# Build main project
-all: $(NAME)
-
-$(NAME): $(LIBFT) mlx $(OBJECTS) $(GNL_OBJECTS) $(PRINT)
-	@bash -c 'tput blink; echo -ne "Compiling Cub3d     \r"; tput sgr0; sleep 0.5; echo "Cub3d is ready to be played!     "'
-	@$(CC) $(CFLAGS) $(OBJECTS) $(GNL_OBJECTS) -o $(NAME) $(MLX_FLAGS) $(LIBFT) $(PRINT)
 
 # Bonus target
 bonus: $(NAME_BONUS)
@@ -151,5 +166,6 @@ clean_mlx:
 
 #vall: all clean
 #	valgrind --track-origins=yes -q --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ./cub3d map.cub
+#valgrind --track-origins=yes -q --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ./cub3d_bonus map.cub
 
 .PHONY: all bonus clean fclean re clean_mlx mlx

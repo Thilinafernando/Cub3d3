@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 19:36:26 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/25 18:23:35 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/25 21:08:59 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,22 @@ int	rgb_return(char **rgb, char ***tmp)
 	free(*(rgb));
 	free_mat(*(tmp));
 	return (-1);
+}
+
+int	rgb_fchecks(t_info *info, int red, int blue, int green)
+{
+	if (info->rgb_f == -42)
+		info->rgb_f = (red << 16) | (green << 8) | blue;
+	else
+		return (ft_printf(2, "Error: Repeated values.\n"), -1);
+	return (0);
+}
+
+int	rgb_cchecks(t_info *info, int red, int blue, int green)
+{
+	if (info->rgb_c == -42)
+		info->rgb_c = (red << 16) | (green << 8) | blue;
+	else
+		return (ft_printf(2, "Error: Repeated values.\n"), -1);
+	return (0);
 }

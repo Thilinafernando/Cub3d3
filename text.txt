@@ -1,9 +1,0 @@
-draw_wall_bonus ok
-draw_weapon_bonus ok
-event_bonus ok
-free_bonus ok
-game_control_bonus -1 ko
-init_bonus ok
-init_player_bonus ok
-ray_bonus ok
-

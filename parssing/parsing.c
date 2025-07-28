@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:59:05 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/24 21:43:26 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:36:58 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ int	fill_file(char *map, t_info *info)
 	int	size;
 
 	i = -1;
-	fd = open(map, O_RDONLY | O_EXCL);
+	fd = open(map, O_RDONLY);
 	if (fd == -1)
-		return (ft_printf(2, "Error: Open failed.\n"));
+		return (ft_printf(2, "Error: Failed to open file.\n"));
 	size = count_lines(map);
+	if (size == -1)
+		return (close(fd), -1);
 	info->file = malloc((size + 1) * sizeof(char *));
 	if (!info->file)
-		return (ft_printf(2, "Error: Malloc failed.\n"));
+		return (close(fd), ft_printf(2, "Error: Malloc failed.\n"));
 	info->file[0] = get_next_line(fd);
 	while (info->file[++i])
 		info->file[i + 1] = get_next_line(fd);
@@ -88,8 +90,6 @@ int	fill_map(t_info *info)
 
 int	validate_map(t_info *info)
 {
-	if (check_playable(info))
-		return (-1);
 	if (check_characters(info))
 		return (-1);
 	if (fill_tmp(info))
@@ -99,6 +99,8 @@ int	validate_map(t_info *info)
 	flood_fill(0, 0, info);
 	if (info->flood_flag == -42)
 		return (ft_printf(2, "Error: Map not closed.\n"));
+	if (check_playable(info))
+		return (-1);
 	print_matrix(info->tmp);
 	free_mat(info->tmp);
 	info->tmp = NULL;

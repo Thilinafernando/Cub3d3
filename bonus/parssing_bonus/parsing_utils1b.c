@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils1b.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 03:01:07 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/07/09 14:51:09 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:07:19 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ int	count_lines(char *map)
 	int		fd;
 	char	*tmp;
 	int		i;
+	char	readd[2];
 
 	i = 0;
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
 		return (ft_printf(2, "Error: Open failed.\n"));
+	if ((read(fd, readd, 1)) < 0)
+		return (perror("read"), close(fd), -1);
 	tmp = get_next_line(fd);
 	while (tmp)
 	{

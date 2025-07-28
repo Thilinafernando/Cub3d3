@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:23:13 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/07/25 18:55:06 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:31:39 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,8 @@ typedef struct s_game
 
 //parssing
 bool	xmp_extention_check(char *str);
+int		rgb_cchecks(t_info *info, int red, int blue, int green);
+int		rgb_fchecks(t_info *info, int red, int blue, int green);
 bool	extention_check(char *str);
 int		paths_conditions(t_info *info, int i, int j, char *str);
 int		fill_file(char *map, t_info *info);
@@ -200,7 +202,8 @@ int		rgb_convertion(t_info *info, char *str, int i, int j);
 int		save_path(char *str, t_info *info, int i, int j);
 void	free_all(t_info *info);
 int		rgb_return(char **rgb, char ***tmp);
-
+int		save_path_checks(char *str, char **path, t_info *info);
+int		rgb_next(char **rgb);
 
 //rendering functions
 void	init_player(t_game *game);
